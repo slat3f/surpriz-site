@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sürpriz - Mobil & Dinamik Arka Plan</title>
+  <title>Bir Rüya Gördüm</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
-    /* Genel stil ayarları */
+    /* Genel Stil Ayarları */
     body {
       margin: 0;
       padding: 20px;
@@ -15,18 +15,17 @@
       color: #fff;
       text-align: center;
       position: relative;
-      /* Opsiyonel: background renk geçişini sabitleyelim */
       background: linear-gradient(120deg, #ff9a9e, #fad0c4);
       overflow: visible;
     }
-    /* Arka plan için canvas, tüm sayfayı kaplayacak şekilde */
+    /* Dinamik Arka Plan için Canvas */
     #backgroundCanvas {
       position: fixed;
       top: 0;
       left: 0;
       z-index: 0;
     }
-    /* Container içeriği için (z-index > canvas) */
+    /* İçerik Container (Canvas'ın üstünde) */
     .container {
       position: relative;
       z-index: 2;
@@ -67,7 +66,7 @@
       box-shadow: 0px 6px 20px rgba(255, 64, 129, 0.8);
       transform: scale(1.05);
     }
-    /* Opsiyonel Floating Emojis (ön planda hareketli dekorasyon) */
+    /* Opsiyonel Floating Emojis (Ön planda dekoratif) */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -95,7 +94,7 @@
         opacity: 0;
       }
     }
-    /* Kalp Patlama Efekti */
+    /* Buton Tıklama Kalp Efekti */
     .heart {
       position: absolute;
       font-size: 24px;
@@ -114,7 +113,7 @@
         opacity: 0;
       }
     }
-    /* Mobil uyumlu düzenlemeler */
+    /* Mobil Uyumlu Düzenlemeler */
     @media only screen and (max-width: 600px) {
       body {
         padding: 10px;
@@ -136,7 +135,7 @@
   </style>
 </head>
 <body>
-  <!-- Dinamik arka plan için canvas -->
+  <!-- Dinamik Arka Plan için Canvas -->
   <canvas id="backgroundCanvas"></canvas>
   
   <!-- Opsiyonel: Floating Emojis -->
@@ -162,7 +161,8 @@
     <img src="foto4.jpeg" alt="Foto 4">
     <p class="caption">🎀</p>
     
-    <h2>🎀 Şarkımız 🎀</h2>
+    <!-- Müzik Başlığı Değiştirildi -->
+    <h2>Mobil & Djnamik Arka Plan – Ben Bir Rüya Gördüm</h2>
     
     <audio id="muzik">
       <source src="ruyagordum.mp3" type="audio/mp3">
@@ -174,16 +174,15 @@
   
   <script>
     /* ---------------------------
-       Arkaplan Partikül Efekti 
+       Arka Plan Partikül Efekti
     ----------------------------- */
     const canvas = document.getElementById("backgroundCanvas");
     const ctx = canvas.getContext("2d");
-    // Canvas tüm ekranı kaplayacak:
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
     const particlesArray = [];
-    const particleCount = Math.floor((canvas.width * canvas.height) / 8000); // ekran boyutuna duyarlı
+    const particleCount = Math.floor((canvas.width * canvas.height) / 8000);
     
     function Particle() {
       this.x = Math.random() * canvas.width;
@@ -191,14 +190,11 @@
       this.radius = Math.random() * 2 + 1;
       this.speedX = Math.random() * 0.5 - 0.25;
       this.speedY = Math.random() * 0.5 - 0.25;
-      // Yumuşak beyaz tonlu renk
       this.color = 'rgba(255, 255, 255, 0.7)';
     }
     Particle.prototype.update = function() {
       this.x += this.speedX;
       this.y += this.speedY;
-      
-      // Kenarlardan çıkınca diğer tarafından gelsin:
       if (this.x < 0) this.x = canvas.width;
       if (this.x > canvas.width) this.x = 0;
       if (this.y < 0) this.y = canvas.height;
@@ -237,20 +233,18 @@
     });
     
     /* ---------------------------
-       Buton Kalp Patlama Efekti 
+       Buton Kalp Patlama Efekti
     ----------------------------- */
     function playAndExplode() {
       const audio = document.getElementById("muzik");
       audio.currentTime = 0;
       audio.play();
       
-      // Butonun merkez koordinatlarını hesapla
       const button = document.getElementById("music-button");
       const rect = button.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // 15 kalp oluştur, butonun içinden rastgele yönlere dağılsın
       for (let i = 0; i < 15; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -258,7 +252,6 @@
         heart.style.left = centerX + "px";
         heart.style.top = centerY + "px";
         
-        // Rastgele yön (-150px ile +150px arası)
         const randomX = (Math.random() * 300 - 150) + "px";
         const randomY = (Math.random() * 300 - 150) + "px";
         heart.style.setProperty("--tx", randomX);
