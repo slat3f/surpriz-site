@@ -14,10 +14,12 @@
             color: #fff;
             margin: 0;
             padding: 20px;
+            overflow: hidden;
         }
 
         .container {
-            margin-top: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         img {
@@ -52,9 +54,35 @@
                 transform: translateY(0);
             }
         }
+
+        /* Kayan 🎀 emoji animasyonu */
+        .ribbon {
+            position: absolute;
+            font-size: 30px;
+            animation: floatUp 5s linear infinite;
+            color: #fff;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Kayan 🎀 Emojileri -->
+    <div class="ribbon" style="left: 10%; animation-duration: 6s;">🎀</div>
+    <div class="ribbon" style="left: 30%; animation-duration: 4s;">🎀</div>
+    <div class="ribbon" style="left: 50%; animation-duration: 5.5s;">🎀</div>
+    <div class="ribbon" style="left: 70%; animation-duration: 3.8s;">🎀</div>
+    <div class="ribbon" style="left: 90%; animation-duration: 6.5s;">🎀</div>
+
     <div class="container">
         <img src="foto1.jpeg" alt="Foto 1">
         <p class="caption">💖 Beni affetcen mi?</p>
