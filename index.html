@@ -39,7 +39,7 @@
       z-index: 2;
       padding: 20px;
     }
-    /* Floating Dekoratif Emojiler – Fotoğrafların arkasında */
+    /* Floating Dekoratif Emojiler – Fotoğrafların arkasında yer alacak */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -49,19 +49,11 @@
       pointer-events: none;
       z-index: 1;
     }
-    /* Kayan emojiler yalnızca 🎀, 🩷, 🍓 olacak, miktarını artırdık */
-    <!--
-      Burada 10 adet örnek emoji ekledik. İhtiyaç duyarsan bu sayıyı da artırabilirsin.
-    -->
-    /* Örnek: */
-    /* 
-      left yüzdelik değerleri ve animation-duration süreleri ile farklı konum ve hızlar ayarlandı.
-    */
-    
+    /* Fotoğraflar – Kenarları daha yuvarlak olsun */
     img {
       width: 80%;
       max-width: 400px;
-      border-radius: 20px;
+      border-radius: 50px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       margin: 10px 0;
     }
@@ -93,7 +85,7 @@
       box-shadow: 0 6px 20px rgba(255,64,129,0.8);
       transform: scale(1.05);
     }
-    /* Floating Emoji Animasyonu */
+    /* Floating Emoji Animasyonu – ortak tanım */
     .emoji {
       position: absolute;
       font-size: 40px;
@@ -114,7 +106,7 @@
       animation: explodeHeart 1.5s ease-out forwards;
     }
     @keyframes explodeHeart {
-      0% { transform: scale(0.5) translate(0,0); opacity: 1; }
+      0% { transform: scale(0.5) translate(0, 0); opacity: 1; }
       100% { transform: scale(1.8) translate(var(--tx), var(--ty)); opacity: 0; }
     }
     /* Havai Fişek Efekti */
@@ -176,19 +168,8 @@
   <canvas id="backgroundCanvas"></canvas>
   <!-- Ses Görselleştirici Canvas -->
   <canvas id="visualizerCanvas"></canvas>
-  <!-- Floating Dekoratif Emojiler – Yalnızca 🎀, 🩷, 🍓 -->
-  <div class="emoji-container">
-    <div class="emoji" style="left:5%; animation-duration:10s;">🎀</div>
-    <div class="emoji" style="left:15%; animation-duration:9s;">🩷</div>
-    <div class="emoji" style="left:25%; animation-duration:8s;">🍓</div>
-    <div class="emoji" style="left:35%; animation-duration:7s;">🎀</div>
-    <div class="emoji" style="left:45%; animation-duration:9s;">🩷</div>
-    <div class="emoji" style="left:55%; animation-duration:8s;">🍓</div>
-    <div class="emoji" style="left:65%; animation-duration:10s;">🎀</div>
-    <div class="emoji" style="left:75%; animation-duration:9s;">🩷</div>
-    <div class="emoji" style="left:85%; animation-duration:7s;">🍓</div>
-    <div class="emoji" style="left:95%; animation-duration:8s;">🎀</div>
-  </div>
+  <!-- Floating Dekoratif Emojiler – Dinamik olarak oluşturulacak -->
+  <div class="emoji-container" id="emojiContainer"></div>
   
   <!-- Mesaj Overlay (Kalıcı) -->
   <div id="message"></div>
@@ -240,7 +221,6 @@
       this.speedY = Math.random() * 0.5 - 0.25;
       this.color = 'rgba(255, 255, 255, 0.7)';
     }
-    
     Particle.prototype.update = function() {
       this.x += this.speedX;
       this.y += this.speedY;
@@ -249,21 +229,18 @@
       if (this.y < 0) this.y = canvas.height;
       if (this.y > canvas.height) this.y = 0;
     }
-    
     Particle.prototype.draw = function() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = this.color;
       ctx.fill();
     }
-    
     function initParticles() {
       particlesArray.length = 0;
       for (let i = 0; i < particleCount; i++) {
         particlesArray.push(new Particle());
       }
     }
-    
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particlesArray.forEach(particle => {
@@ -272,10 +249,8 @@
       });
       requestAnimationFrame(animateParticles);
     }
-    
     initParticles();
     animateParticles();
-    
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -313,9 +288,7 @@
         x += barWidth + 1;
       }
     }
-    
     drawVisualizer();
-    
     window.addEventListener("resize", () => {
       visualizerCanvas.width = window.innerWidth;
       visualizerCanvas.height = window.innerHeight;
@@ -328,7 +301,6 @@
       for (let i = 0; i < 30; i++) {
         const firework = document.createElement("div");
         firework.className = "firework";
-        // Rastgele renk seçimi
         const colors = ["#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff"];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         firework.style.background = randomColor;
@@ -366,7 +338,6 @@
        Buton: Fireworks, Vibration ve Mesaj Overlay
     ------------------------- */
     function playAndExplode() {
-      // Müzik başlatma
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
@@ -378,13 +349,11 @@
         navigator.vibrate(200);
       }
       
-      // Mesaj Overlay: Göster ve ayarla (kalıcı, gizleme yok!)
       const message = document.getElementById("message");
       message.textContent =
         "iyiki tanışmışız bitaneemmm seni cookkk seviyorrum vede sana coookkk deger veriyorum ama bazen essekligim tutabiliyo sen beni mazur gör muaaahhh🩷";
       message.style.display = "block";
       
-      // Ekranın her yerinde havai fişek efektleri
       if (fireworksEnabled) {
         for (let j = 0; j < 5; j++) {
           let randomX = Math.random() * window.innerWidth;
@@ -399,6 +368,29 @@
         heartExplosion(centerX, centerY);
       }
     }
+    
+    /* -----------------------
+       Dinamik Emoji Oluşturma
+       Yalnızca 🎀, 🩷 ve 🍓 kullanılacak
+    ------------------------- */
+    (function generateEmojis() {
+      const emojiContainer = document.getElementById("emojiContainer");
+      const emojis = ["🎀", "🩷", "🍓"];
+      const emojiCount = 10; // oluşturulacak emoji sayısı
+      for (let i = 0; i < emojiCount; i++) {
+        const div = document.createElement("div");
+        div.className = "emoji";
+        // Random emoji seçimi
+        div.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        // Rastgele sol konum (yüzde olarak)
+        div.style.left = Math.random() * 100 + "%";
+        // Rastgele animasyon süresi (7-10 saniye arası)
+        const duration = 7 + Math.random() * 3;
+        div.style.animationDuration = duration + "s";
+        emojiContainer.appendChild(div);
+      }
+    })();
+    
   </script>
 </body>
-</html> 
+</html>
