@@ -5,41 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sürpriz</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f8e1f4;
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
         }
+
         .container {
             margin-top: 20px;
         }
+
         img {
             width: 80%;
             max-width: 500px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.5s ease-in forwards;
         }
+
         .caption {
-            font-size: 20px;
+            font-size: 24px;
             margin-top: 10px;
             font-weight: bold;
-            color: #ff1493;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         }
+
         audio {
             margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="foto1.jpeg" alt="Foto 1">
-        <p class="caption">Beni affetcen mi?</p>
+        <p class="caption">💖 Beni affetcen mi?</p>
 
         <img src="foto2.jpeg" alt="Foto 2">
-        <p class="caption">Seni coookkk seviyorum bitaneem muaahh</p>
+        <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
 
         <img src="foto3.jpeg" alt="Foto 3">
-        <p class="caption">Beni affetcen mi😔</p>
+        <p class="caption">Beni affetcen mi 😔</p>
 
         <img src="foto4.jpeg" alt="Foto 4">
         <p class="caption">🎀</p>
