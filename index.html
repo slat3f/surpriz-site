@@ -45,44 +45,51 @@
             margin-top: 20px;
         }
 
-        /* Müzik Çalma Butonu */
-        .music-button {
-            padding: 15px 30px;
-            font-size: 22px;
-            background: linear-gradient(45deg, #ff4081, #ff77a9);
-            border: none;
-            border-radius: 50px;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            box-shadow: 0px 4px 15px rgba(255, 64, 129, 0.5);
-        }
-
-        .music-button:hover {
-            box-shadow: 0px 6px 20px rgba(255, 64, 129, 0.8);
-            transform: scale(1.05);
-        }
-
-        /* Kalp Patlama Efekti */
-        .heart {
+        /* Emojilerin sayfanın tamamında çıkmasını sağlayan kod */
+        .ribbon {
             position: absolute;
-            color: #ff69b4;
-            font-size: 24px;
-            animation: explodeHeart 1.5s ease-out forwards;
+            font-size: 30px;
+            color: #fff;
+            animation: floatUp 6s linear infinite;
         }
 
-        @keyframes explodeHeart {
-            0% { transform: scale(0.5) translate(0, 0); opacity: 1; }
-            100% { transform: scale(1.8) translate(var(--x), var(--y)); opacity: 0; }
+        @keyframes floatUp {
+            from { transform: translateY(110vh); opacity: 1; }
+            to { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        /* Rastgele konumlandırma */
+        .ribbon-container {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Emojileri sayfanın altından başlat */
+        .ribbon {
+            bottom: -10vh;
         }
     </style>
 </head>
 <body>
+    <!-- Kayan 🎀 ve 🍓 Emojileri (Sayfanın en altından çıkacak!) -->
+    <div class="ribbon-container">
+        <div class="ribbon" style="left: 5%; animation-duration: 7s;">🎀</div>
+        <div class="ribbon" style="left: 15%; animation-duration: 5s;">🍓</div>
+        <div class="ribbon" style="left: 30%; animation-duration: 6s;">🎀</div>
+        <div class="ribbon" style="left: 45%; animation-duration: 4s;">🍓</div>
+        <div class="ribbon" style="left: 60%; animation-duration: 8s;">🎀</div>
+        <div class="ribbon" style="left: 75%; animation-duration: 6s;">🍓</div>
+        <div class="ribbon" style="left: 90%; animation-duration: 7s;">🎀</div>
+    </div>
+
     <div class="container">
         <img src="foto1.jpeg" alt="Foto 1">
-        <p class="caption">🔢 34</p> <!-- Rastgele 2 basamaklı sayı ekledim -->
+        <p class="caption">🔢 26</p> <!-- Rastgele 2 basamaklı sayı ekledim -->
 
         <img src="foto2.jpeg" alt="Foto 2">
         <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
@@ -105,21 +112,5 @@
         </audio>
         <button class="music-button" onclick="explodeHearts(); document.getElementById('muzik').play();">🎶 Müziği Başlat</button>
     </div>
-
-    <script>
-        function explodeHearts() {
-            for (let i = 0; i < 10; i++) {
-                let heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '🩷';
-                heart.style.left = window.innerWidth / 2 + 'px';
-                heart.style.top = window.innerHeight / 2 + 'px';
-                heart.style.setProperty('--x', Math.random() * 300 - 150 + 'px');
-                heart.style.setProperty('--y', Math.random() * 300 - 150 + 'px');
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 1500);
-            }
-        }
-    </script>
 </body>
 </html>
