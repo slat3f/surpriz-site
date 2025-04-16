@@ -14,7 +14,7 @@
             color: #fff;
             margin: 0;
             padding: 20px;
-            min-height: 100vh; /* Sayfanın tamamında arka plan tutarlı olsun */
+            min-height: 100vh;
             overflow-y: auto;
             position: relative;
         }
@@ -70,6 +70,7 @@
             pointer-events: none;
         }
 
+        /* Parlayan efektli buton */
         .music-button {
             padding: 12px 24px;
             font-size: 20px;
@@ -79,12 +80,43 @@
             color: white;
             cursor: pointer;
             transition: 0.3s;
+            animation: glow 2s infinite alternate;
         }
 
-        .music-button:hover {
-            background-color: #e91e63;
-            transform: scale(1.1);
+        @keyframes glow {
+            0% { box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); }
+            100% { box-shadow: 0px 0px 20px rgba(255, 255, 255, 1); }
         }
+
+        /* Yazı değişim efekti */
+        .changing-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff1493;
+            animation: textChange 6s infinite alternate;
+        }
+
+        @keyframes textChange {
+            0% { content: "Beni affettin mi?"; }
+            50% { content: "Sonsuza kadar birlikte!"; }
+            100% { content: "Seni her şeyden çok seviyorum!"; }
+        }
+
+        /* Dalga efekti */
+        .wave {
+            position: absolute;
+            width: 100%;
+            height: 150px;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            animation: waveMotion 4s infinite linear;
+        }
+
+        @keyframes waveMotion {
+            from { transform: translateX(0); }
+            to { transform: translateX(100px); }
+        }
+
     </style>
 </head>
 <body>
@@ -112,12 +144,23 @@
 
         <br>
 
+        <!-- "Şarkımız" Başlığı -->
+        <h2>🎀 Şarkımız 🎀</h2>
+
         <!-- Müzik Çalma Butonu -->
         <audio id="muzik">
             <source src="ruyagordum.mp3" type="audio/mp3">
             Tarayıcınız ses dosyasını desteklemiyor.
         </audio>
         <button class="music-button" onclick="document.getElementById('muzik').play();">🎶 Müziği Başlat</button>
+
+        <br>
+
+        <!-- Değişen Yazılar -->
+        <p class="changing-text">Beni affettin mi?</p>
     </div>
+
+    <!-- Dalga Efekti -->
+    <div class="wave"></div>
 </body>
 </html>
