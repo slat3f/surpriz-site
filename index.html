@@ -127,7 +127,7 @@
         opacity: 0;
       }
     }
-    /* Mesaj Overlay Stili - Büyütülmüş, opak pembe arka plan */
+    /* Mesaj Overlay Stili - Küçültilmiş ve merkezde */
     #message {
       display: none;
       position: fixed;
@@ -135,12 +135,13 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: #ff77a9;
-      padding: 60px;
+      padding: 30px;
       border-radius: 10px;
-      font-size: 60px;
+      font-size: 40px;
       font-family: sans-serif;
       color: #fff;
       z-index: 4;
+      text-align: center;
     }
     /* Şarkı Başlığı (Butonun Üzerinde) */
     .song-title {
@@ -156,7 +157,7 @@
       .music-button { font-size: 18px; padding: 10px 20px; }
       .heart { font-size: 20px; }
       img { max-width: 90%; }
-      #message { font-size: 36px; padding: 30px; }
+      #message { font-size: 24px; padding: 15px; }
       .song-title { font-size: 20px; }
     }
   </style>
@@ -343,14 +344,14 @@
     ------------------------- */
     function playAndExplode() {
       // Müzik başlatma
-      if(audioCtx.state === 'suspended'){
+      if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
       const audio = document.getElementById("muzik");
       audio.currentTime = 0;
       audio.play();
       
-      if(navigator.vibrate) {
+      if (navigator.vibrate) {
         navigator.vibrate(200);
       }
       
@@ -360,7 +361,7 @@
         "iyiki tanışmışız bitaneemmm seni cookkk seviyorrum vede sana coookkk deger veriyorum ama bazen essekligim tutabiliyo sen beni mazur gör muaaahhh🩷";
       message.style.display = "block";
       
-      // Fireworks: Ekranın her yerinde, rastgele konumlarda patlasın
+      // Ekranın her yerinde havai fişek efektleri
       if (fireworksEnabled) {
         for (let j = 0; j < 5; j++) {
           let randomX = Math.random() * window.innerWidth;
@@ -368,7 +369,6 @@
           fireworksEffect(randomX, randomY);
         }
       } else {
-        // Eğer havai fişek devre dışıysa, buton çevresinde kalp patlaması (fallback)
         const button = document.getElementById("music-button");
         const rect = button.getBoundingClientRect();
         let centerX = rect.left + rect.width / 2;
@@ -378,4 +378,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
