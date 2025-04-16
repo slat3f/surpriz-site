@@ -39,7 +39,7 @@
       z-index: 2;
       padding: 20px;
     }
-    /* Floating Dekoratif Emojiler – Artık fotoğrafların arkasında */
+    /* Floating Dekoratif Emojiler – Fotoğrafların arkasında */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -49,18 +49,27 @@
       pointer-events: none;
       z-index: 1;
     }
+    /* Kayan emojiler yalnızca 🎀, 🩷, 🍓 olacak, miktarını artırdık */
+    <!--
+      Burada 10 adet örnek emoji ekledik. İhtiyaç duyarsan bu sayıyı da artırabilirsin.
+    -->
+    /* Örnek: */
+    /* 
+      left yüzdelik değerleri ve animation-duration süreleri ile farklı konum ve hızlar ayarlandı.
+    */
+    
     img {
       width: 80%;
       max-width: 400px;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       margin: 10px 0;
     }
     .caption {
       font-size: 24px;
       margin-top: 10px;
       font-weight: bold;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     }
     audio {
       margin-top: 20px;
@@ -77,7 +86,7 @@
       cursor: pointer;
       transition: 0.3s;
       font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
       box-shadow: 0 4px 15px rgba(255,64,129,0.5);
     }
     .music-button:hover {
@@ -167,18 +176,18 @@
   <canvas id="backgroundCanvas"></canvas>
   <!-- Ses Görselleştirici Canvas -->
   <canvas id="visualizerCanvas"></canvas>
-  <!-- Floating Dekoratif Emojiler (Artırılmış emoji sayısı) -->
+  <!-- Floating Dekoratif Emojiler – Yalnızca 🎀, 🩷, 🍓 -->
   <div class="emoji-container">
-    <div class="emoji" style="left:5%; animation-duration:10s;">💫</div>
-    <div class="emoji" style="left:15%; animation-duration:9s;">✨</div>
-    <div class="emoji" style="left:25%; animation-duration:8s;">🎆</div>
-    <div class="emoji" style="left:35%; animation-duration:7s;">🎇</div>
-    <div class="emoji" style="left:45%; animation-duration:9s;">🌟</div>
-    <div class="emoji" style="left:55%; animation-duration:8s;">💥</div>
-    <div class="emoji" style="left:65%; animation-duration:10s;">✨</div>
-    <div class="emoji" style="left:75%; animation-duration:9s;">🎆</div>
-    <div class="emoji" style="left:85%; animation-duration:7s;">🎇</div>
-    <div class="emoji" style="left:95%; animation-duration:8s;">🌟</div>
+    <div class="emoji" style="left:5%; animation-duration:10s;">🎀</div>
+    <div class="emoji" style="left:15%; animation-duration:9s;">🩷</div>
+    <div class="emoji" style="left:25%; animation-duration:8s;">🍓</div>
+    <div class="emoji" style="left:35%; animation-duration:7s;">🎀</div>
+    <div class="emoji" style="left:45%; animation-duration:9s;">🩷</div>
+    <div class="emoji" style="left:55%; animation-duration:8s;">🍓</div>
+    <div class="emoji" style="left:65%; animation-duration:10s;">🎀</div>
+    <div class="emoji" style="left:75%; animation-duration:9s;">🩷</div>
+    <div class="emoji" style="left:85%; animation-duration:7s;">🍓</div>
+    <div class="emoji" style="left:95%; animation-duration:8s;">🎀</div>
   </div>
   
   <!-- Mesaj Overlay (Kalıcı) -->
@@ -231,6 +240,7 @@
       this.speedY = Math.random() * 0.5 - 0.25;
       this.color = 'rgba(255, 255, 255, 0.7)';
     }
+    
     Particle.prototype.update = function() {
       this.x += this.speedX;
       this.y += this.speedY;
@@ -239,18 +249,21 @@
       if (this.y < 0) this.y = canvas.height;
       if (this.y > canvas.height) this.y = 0;
     }
+    
     Particle.prototype.draw = function() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = this.color;
       ctx.fill();
     }
+    
     function initParticles() {
       particlesArray.length = 0;
       for (let i = 0; i < particleCount; i++) {
         particlesArray.push(new Particle());
       }
     }
+    
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particlesArray.forEach(particle => {
@@ -259,8 +272,10 @@
       });
       requestAnimationFrame(animateParticles);
     }
+    
     initParticles();
     animateParticles();
+    
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -284,6 +299,7 @@
     analyser.fftSize = 256;
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
+    
     function drawVisualizer() {
       requestAnimationFrame(drawVisualizer);
       analyser.getByteFrequencyData(dataArray);
@@ -297,7 +313,9 @@
         x += barWidth + 1;
       }
     }
+    
     drawVisualizer();
+    
     window.addEventListener("resize", () => {
       visualizerCanvas.width = window.innerWidth;
       visualizerCanvas.height = window.innerHeight;
@@ -383,4 +401,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
