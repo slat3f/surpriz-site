@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sürpriz</title>
+  <title>Sürpriz - Mobil Uyumlu</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,7 +15,6 @@
       color: #fff;
       text-align: center;
       position: relative;
-      /* overflow: hidden kullanılmıyor, bu sayede emojiler görünür kalıyor */
       overflow: visible;
     }
     
@@ -65,7 +64,7 @@
       transform: scale(1.05);
     }
     
-    /* Floating Emojis - opsiyonel */
+    /* Opsiyonel Floating Emojis - arka plan */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -116,6 +115,26 @@
         opacity: 0;
       }
     }
+    
+    /* Mobil uyumlu düzenlemeler */
+    @media only screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+    
+      .caption {
+        font-size: 18px;
+      }
+    
+      .music-button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+    
+      .heart {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -152,21 +171,21 @@
   </div>
   
   <script>
-    // Rastgele sayı oluştur ve ekrana yaz (0-99 arası)
+    // Rastgele sayı oluştur (0-99)
     document.getElementById("rand-number").textContent = Math.floor(Math.random() * 100);
-    
+
     function playAndExplode() {
       const audio = document.getElementById("muzik");
       audio.currentTime = 0;
       audio.play();
-      
+
       // Butonun merkez koordinatlarını alıyoruz
       const button = document.getElementById("music-button");
       const rect = button.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // Kalpler buton merkezinden rastgele yönlere patlasın
+      // 15 kalp oluştur, butonun merkezinden rastgele yönlere dağılsın
       for (let i = 0; i < 15; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -174,7 +193,7 @@
         heart.style.left = centerX + "px";
         heart.style.top = centerY + "px";
         
-        // Rastgele yön ve mesafe (örneğin -150px ile 150px arası)
+        // Rastgele yön ve mesafe (-150px ile 150px)
         const randomX = (Math.random() * 300 - 150) + "px";
         const randomY = (Math.random() * 300 - 150) + "px";
         heart.style.setProperty("--tx", randomX);
