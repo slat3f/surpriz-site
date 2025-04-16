@@ -7,16 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
       text-align: center;
       font-family: 'Dancing Script', cursive;
       background: linear-gradient(120deg, #ff9a9e, #fad0c4);
       color: #fff;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      /* Not: overflow: hidden; eklemiyoruz */
-      overflow: visible;
       position: relative;
+      /* Not: overflow: hidden kullanılmıyor */
+      overflow: visible;
     }
     
     .container {
@@ -45,7 +45,7 @@
       margin-top: 20px;
     }
     
-    /* Floating Emojis */
+    /* Floating Emojis (arka plan için, isteğe bağlı) */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -117,7 +117,7 @@
   </style>
 </head>
 <body>
-  <!-- Floating Emojis -->
+  <!-- Opsiyonel: Floating Emojis -->
   <div class="emoji-container">
     <div class="emoji" style="left:10%; animation-duration:9s;">🎀</div>
     <div class="emoji" style="left:30%; animation-duration:11s;">🍓</div>
@@ -128,7 +128,7 @@
 
   <div class="container">
     <img src="foto1.jpeg" alt="Foto 1">
-    <p class="caption">🔢 42</p>
+    <p class="caption">🔢 4</p>
     
     <img src="foto2.jpeg" alt="Foto 2">
     <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
@@ -146,37 +146,36 @@
       Tarayıcınız ses dosyasını desteklemiyor.
     </audio>
     <br>
-    <!-- Butona type="button" ekleyerek form davranışını engelliyoruz -->
     <button type="button" class="music-button" onclick="playMusicAndHearts()">🎶 Müziği Başlat</button>
   </div>
   
   <script>
     function playMusicAndHearts() {
-      var audio = document.getElementById("muzik");
-      audio.currentTime = 0; // Müzik her seferinde baştan çalsın
+      const audio = document.getElementById("muzik");
+      audio.currentTime = 0; // Her seferinde baştan çalsın
       audio.play();
-      explodeHearts();
+      explodeHearts(); // Butona tıklandığında kalpler gecikmesiz patlasın
     }
     
     function explodeHearts() {
-      // 15 kalp oluşturup ekranın ortasından patlama efekti veriyoruz.
+      // Ekranın ortasından 15 kalp oluşturup rastgele yönlere uçuruyoruz.
       for (let i = 0; i < 15; i++) {
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "🩷";
-        // Ekranın tam ortası
-        heart.style.left = (window.innerWidth / 2) + "px";
-        heart.style.top = (window.innerHeight / 2) + "px";
-
-        // Kalbin rastgele yönlere uçması için
-        let randomX = (Math.random() * 300 - 150) + "px";
-        let randomY = (Math.random() * 300 - 150) + "px";
+        // Başlangıç noktasını ekranın ortası olarak ayarlıyoruz.
+        heart.style.left = window.innerWidth / 2 + "px";
+        heart.style.top = window.innerHeight / 2 + "px";
+        
+        // Kalbin rastgele yönde uçması için değerler:
+        let randomX = (Math.random() * 400 - 200) + "px"; // -200px ile 200px arasında
+        let randomY = (Math.random() * 400 - 200) + "px";
         heart.style.setProperty("--tx", randomX);
         heart.style.setProperty("--ty", randomY);
         
         document.body.appendChild(heart);
         
-        // Animasyon bitince kalbi kaldırıyoruz
+        // Animasyon bitince element DOM'dan kaldırılır.
         setTimeout(() => heart.remove(), 1500);
       }
     }
