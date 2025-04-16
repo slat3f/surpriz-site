@@ -44,10 +44,16 @@
         <img src="foto4.jpeg" alt="Foto 4">
         <p class="caption">🎀</p>
 
-        <audio autoplay>
+        <audio id="muzik" autoplay>
             <source src="ruyagordum.mp3" type="audio/mp3">
             Tarayıcınız ses dosyasını desteklemiyor.
         </audio>
     </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById("muzik").play();
+        };
+    </script>
 </body>
 </html>
