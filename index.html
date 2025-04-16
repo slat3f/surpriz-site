@@ -14,7 +14,7 @@
             color: #fff;
             margin: 0;
             padding: 20px;
-            height: 100vh; /* Sayfanın yukarıdan başlamasını sağlar */
+            height: 100vh;
             overflow-y: auto;
             position: relative;
         }
@@ -26,7 +26,7 @@
 
         img {
             width: 80%;
-            max-width: 500px;
+            max-width: 100%;
             border-radius: 20px;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
             opacity: 0;
@@ -47,7 +47,6 @@
             margin-top: 20px;
         }
 
-        /* Yazılar parlayan efekt */
         @keyframes glow {
             0% { text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5); }
             100% { text-shadow: 4px 4px 12px rgba(255, 255, 255, 0.9); }
@@ -66,22 +65,21 @@
             to { transform: translateY(-10vh); opacity: 0; }
         }
 
-        /* Müzik butonuna titreşim efekti */
+        /* Müzik butonuna tatlı efekt */
         .music-button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #ff1493;
+            padding: 12px 24px;
+            font-size: 20px;
+            background-color: #ff4081;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
             cursor: pointer;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            animation: shake 3s infinite alternate;
+            transition: 0.3s;
         }
 
-        @keyframes shake {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+        .music-button:hover {
+            background-color: #e91e63;
+            transform: scale(1.1);
         }
 
         /* Özel Mesaj */
