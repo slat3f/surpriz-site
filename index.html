@@ -15,6 +15,7 @@
       color: #fff;
       text-align: center;
       position: relative;
+      /* overflow: hidden kullanılmıyor, böylece opsiyonel emojiler görünür kalıyor */
       overflow: visible;
     }
     
@@ -64,7 +65,7 @@
       transform: scale(1.05);
     }
     
-    /* Opsiyonel Floating Emojis - arka plan */
+    /* Opsiyonel Floating Emojis - arka plan dekorasyonu */
     .emoji-container {
       position: fixed;
       top: 0;
@@ -116,7 +117,7 @@
       }
     }
     
-    /* Mobil uyumlu düzenlemeler */
+    /* Mobil Uyumlu Düzenlemeler */
     @media only screen and (max-width: 600px) {
       body {
         padding: 10px;
@@ -134,11 +135,16 @@
       .heart {
         font-size: 20px;
       }
+      
+      /* Dokunmatik cihazlar için ekstra tap alanı ve daha net arayüz */
+      img {
+        max-width: 90%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Opsiyonel Floating Emojis -->
+  <!-- Opsiyonel: Floating Emojis -->
   <div class="emoji-container">
     <div class="emoji" style="left:10%; animation-duration:9s;">🎀</div>
     <div class="emoji" style="left:30%; animation-duration:11s;">🍓</div>
@@ -149,7 +155,8 @@
 
   <div class="container">
     <img src="foto1.jpeg" alt="Foto 1">
-    <p class="caption">🔢 <span id="rand-number"></span></p>
+    <!-- Artık rastgele sayı yerine sabit ve manuel yazılmış rakam -->
+    <p class="caption">🔢 42</p>
     
     <img src="foto2.jpeg" alt="Foto 2">
     <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
@@ -171,21 +178,20 @@
   </div>
   
   <script>
-    // Rastgele sayı oluştur (0-99)
-    document.getElementById("rand-number").textContent = Math.floor(Math.random() * 100);
-
+    // Sayfa her yenilendiğinde artık rastgele sayı üretilmiyor; sayı manuel olarak belirlenmiş durumda.
+    
     function playAndExplode() {
       const audio = document.getElementById("muzik");
       audio.currentTime = 0;
       audio.play();
-
-      // Butonun merkez koordinatlarını alıyoruz
+      
+      // Butonun merkez koordinatlarını hesapla
       const button = document.getElementById("music-button");
       const rect = button.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // 15 kalp oluştur, butonun merkezinden rastgele yönlere dağılsın
+      // Butonun içinden 15 kalp oluştur, rastgele yönlere dağılarak patlasın ve kaybolsun
       for (let i = 0; i < 15; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -193,7 +199,7 @@
         heart.style.left = centerX + "px";
         heart.style.top = centerY + "px";
         
-        // Rastgele yön ve mesafe (-150px ile 150px)
+        // Rastgele yön (-150px ile 150px arası)
         const randomX = (Math.random() * 300 - 150) + "px";
         const randomY = (Math.random() * 300 - 150) + "px";
         heart.style.setProperty("--tx", randomX);
