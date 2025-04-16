@@ -14,6 +14,9 @@
             color: #fff;
             margin: 0;
             padding: 20px;
+            height: 100vh; /* Sayfanın yukarıdan başlamasını sağlar */
+            overflow-y: auto;
+            position: relative;
         }
 
         .container {
@@ -37,50 +40,67 @@
             font-weight: bold;
             color: #fff;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            animation: glow 2s infinite alternate;
         }
 
         audio {
             margin-top: 20px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Yazılar parlayan efekt */
+        @keyframes glow {
+            0% { text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 4px 4px 12px rgba(255, 255, 255, 0.9); }
         }
 
         /* Kayan 🎀 emoji animasyonu */
         .ribbon {
             position: absolute;
             font-size: 30px;
-            animation: floatUp 5s linear infinite;
+            animation: floatUp 6s linear infinite;
             color: #fff;
         }
 
         @keyframes floatUp {
-            from {
-                transform: translateY(100vh);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-10vh);
-                opacity: 0;
-            }
+            from { transform: translateY(100vh); opacity: 1; }
+            to { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        /* Müzik butonuna titreşim efekti */
+        .music-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff1493;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            animation: shake 3s infinite alternate;
+        }
+
+        @keyframes shake {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* Özel Mesaj */
+        .special-message {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ff1493;
+            animation: fadeIn 2s ease-in forwards;
         }
     </style>
 </head>
 <body>
     <!-- Kayan 🎀 Emojileri -->
-    <div class="ribbon" style="left: 10%; animation-duration: 6s;">🎀</div>
-    <div class="ribbon" style="left: 30%; animation-duration: 4s;">🎀</div>
-    <div class="ribbon" style="left: 50%; animation-duration: 5.5s;">🎀</div>
-    <div class="ribbon" style="left: 70%; animation-duration: 3.8s;">🎀</div>
-    <div class="ribbon" style="left: 90%; animation-duration: 6.5s;">🎀</div>
+    <div class="ribbon" style="left: 10%; animation-duration: 7s;">🎀</div>
+    <div class="ribbon" style="left: 30%; animation-duration: 5s;">🎀</div>
+    <div class="ribbon" style="left: 50%; animation-duration: 6.5s;">🎀</div>
+    <div class="ribbon" style="left: 70%; animation-duration: 4.2s;">🎀</div>
+    <div class="ribbon" style="left: 90%; animation-duration: 7.8s;">🎀</div>
 
     <div class="container">
         <img src="foto1.jpeg" alt="Foto 1">
@@ -95,10 +115,19 @@
         <img src="foto4.jpeg" alt="Foto 4">
         <p class="caption">🎀</p>
 
-        <audio controls>
+        <br>
+
+        <!-- Müzik Çalma Butonu -->
+        <audio id="muzik">
             <source src="ruyagordum.mp3" type="audio/mp3">
             Tarayıcınız ses dosyasını desteklemiyor.
         </audio>
+        <button class="music-button" onclick="document.getElementById('muzik').play();">🎶 Müziği Başlat</button>
+
+        <br>
+
+        <!-- Özel Mesaj -->
+        <p class="special-message">💌 Seni seviyorum... Sonsuza kadar birlikte olalım! ✨</p>
     </div>
 </body>
 </html>
