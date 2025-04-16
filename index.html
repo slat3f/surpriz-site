@@ -53,14 +53,14 @@
       width: 80%;
       max-width: 400px;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       margin: 10px 0;
     }
     .caption {
       font-size: 24px;
       margin-top: 10px;
       font-weight: bold;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
     }
     audio {
       margin-top: 20px;
@@ -77,11 +77,11 @@
       cursor: pointer;
       transition: 0.3s;
       font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.5);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(255,64,129,0.5);
     }
     .music-button:hover {
-      box-shadow: 0 6px 20px rgba(255, 64, 129, 0.8);
+      box-shadow: 0 6px 20px rgba(255,64,129,0.8);
       transform: scale(1.05);
     }
     /* Floating Emoji Animasyonu */
@@ -127,7 +127,7 @@
         opacity: 0;
       }
     }
-    /* Mesaj Overlay Stili - Arka plan büyütüldü ve opak pembe */
+    /* Mesaj Overlay Stili - Büyütülmüş, opak pembe arka plan */
     #message {
       display: none;
       position: fixed;
@@ -135,9 +135,9 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: #ff77a9;
-      padding: 40px;
+      padding: 60px;
       border-radius: 10px;
-      font-size: 36px;
+      font-size: 60px;
       font-family: sans-serif;
       color: #fff;
       z-index: 4;
@@ -156,7 +156,7 @@
       .music-button { font-size: 18px; padding: 10px 20px; }
       .heart { font-size: 20px; }
       img { max-width: 90%; }
-      #message { font-size: 18px; padding: 15px; }
+      #message { font-size: 36px; padding: 30px; }
       .song-title { font-size: 20px; }
     }
   </style>
@@ -339,7 +339,7 @@
     }
     
     /* -----------------------
-       Buton: Kalp/Fireworks, Vibration ve Mesaj Overlay
+       Buton: Fireworks, Vibration ve Mesaj Overlay
     ------------------------- */
     function playAndExplode() {
       // Müzik başlatma
@@ -354,19 +354,25 @@
         navigator.vibrate(200);
       }
       
-      // Mesaj Overlay: Göster ve yazıyı ayarla (kalıcı olarak ekranda kalsın)
+      // Mesaj Overlay: Göster ve ayarla (kalıcı, gizleme yok!)
       const message = document.getElementById("message");
-      message.textContent = "iyiki tanışmışız bitaneemmm seni cookkk seviyorrum vede sana coookkk deger veriyorum ama bazen essekligim tutabiliyo sen beni mazur gör muaaahhh🩷";
+      message.textContent =
+        "iyiki tanışmışız bitaneemmm seni cookkk seviyorrum vede sana coookkk deger veriyorum ama bazen essekligim tutabiliyo sen beni mazur gör muaaahhh🩷";
       message.style.display = "block";
       
-      const button = document.getElementById("music-button");
-      const rect = button.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      if(fireworksEnabled) {
-        fireworksEffect(centerX, centerY);
+      // Fireworks: Ekranın her yerinde, rastgele konumlarda patlasın
+      if (fireworksEnabled) {
+        for (let j = 0; j < 5; j++) {
+          let randomX = Math.random() * window.innerWidth;
+          let randomY = Math.random() * window.innerHeight;
+          fireworksEffect(randomX, randomY);
+        }
       } else {
+        // Eğer havai fişek devre dışıysa, buton çevresinde kalp patlaması (fallback)
+        const button = document.getElementById("music-button");
+        const rect = button.getBoundingClientRect();
+        let centerX = rect.left + rect.width / 2;
+        let centerY = rect.top + rect.height / 2;
         heartExplosion(centerX, centerY);
       }
     }
