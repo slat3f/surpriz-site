@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sürpriz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       text-align: center;
@@ -14,25 +14,25 @@
       margin: 0;
       padding: 20px;
       min-height: 100vh;
+      /* Not: overflow: hidden; eklemiyoruz */
+      overflow: visible;
       position: relative;
     }
-
+    
     .container {
       position: relative;
       z-index: 2;
       padding: 20px;
     }
-
+    
     img {
       width: 80%;
       max-width: 100%;
       border-radius: 20px;
       box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
       margin: 10px 0;
-      opacity: 1;
-      transform: translateY(0);
     }
-
+    
     .caption {
       font-size: 24px;
       margin-top: 10px;
@@ -40,34 +40,34 @@
       color: #fff;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     }
-
+    
     audio {
       margin-top: 20px;
     }
-
+    
     /* Floating Emojis */
     .emoji-container {
       position: fixed;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 1;
     }
-
+    
     .emoji {
       position: absolute;
       font-size: 40px;
       animation: floatUp 8s linear infinite;
     }
-
+    
     @keyframes floatUp {
       0% {
         transform: translateY(100vh);
         opacity: 0;
       }
-      20% {
+      15% {
         opacity: 1;
       }
       100% {
@@ -75,7 +75,7 @@
         opacity: 0;
       }
     }
-
+    
     /* Şık Müzik Butonu */
     .music-button {
       padding: 15px 30px;
@@ -90,12 +90,12 @@
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       box-shadow: 0px 4px 15px rgba(255, 64, 129, 0.5);
     }
-
+    
     .music-button:hover {
       box-shadow: 0px 6px 20px rgba(255, 64, 129, 0.8);
       transform: scale(1.05);
     }
-
+    
     /* Kalp Patlama Efekti */
     .heart {
       position: absolute;
@@ -103,7 +103,7 @@
       color: #ff69b4;
       animation: explodeHeart 1.5s ease-out forwards;
     }
-
+    
     @keyframes explodeHeart {
       0% {
         transform: scale(0.5) translate(0, 0);
@@ -119,67 +119,65 @@
 <body>
   <!-- Floating Emojis -->
   <div class="emoji-container">
-    <div class="emoji" style="left: 10%; animation-duration: 9s;">🎀</div>
-    <div class="emoji" style="left: 30%; animation-duration: 11s;">🍓</div>
-    <div class="emoji" style="left: 50%; animation-duration: 10s;">🎀</div>
-    <div class="emoji" style="left: 70%; animation-duration: 8s;">🍓</div>
-    <div class="emoji" style="left: 90%; animation-duration: 12s;">🎀</div>
+    <div class="emoji" style="left:10%; animation-duration:9s;">🎀</div>
+    <div class="emoji" style="left:30%; animation-duration:11s;">🍓</div>
+    <div class="emoji" style="left:50%; animation-duration:10s;">🎀</div>
+    <div class="emoji" style="left:70%; animation-duration:8s;">🍓</div>
+    <div class="emoji" style="left:90%; animation-duration:12s;">🎀</div>
   </div>
 
   <div class="container">
-    <img src="foto1.jpeg" alt="Foto 1" />
+    <img src="foto1.jpeg" alt="Foto 1">
     <p class="caption">🔢 42</p>
-
-    <img src="foto2.jpeg" alt="Foto 2" />
+    
+    <img src="foto2.jpeg" alt="Foto 2">
     <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
-
-    <img src="foto3.jpeg" alt="Foto 3" />
+    
+    <img src="foto3.jpeg" alt="Foto 3">
     <p class="caption">Beni affetcen mi 😔</p>
-
-    <img src="foto4.jpeg" alt="Foto 4" />
+    
+    <img src="foto4.jpeg" alt="Foto 4">
     <p class="caption">🎀</p>
-
+    
     <h2>🎀 Şarkımız 🎀</h2>
-
+    
     <audio id="muzik">
-      <source src="ruyagordum.mp3" type="audio/mp3" />
+      <source src="ruyagordum.mp3" type="audio/mp3">
       Tarayıcınız ses dosyasını desteklemiyor.
     </audio>
-    <br />
-    <button class="music-button" onclick="playMusicAndHearts()">🎶 Müziği Başlat</button>
+    <br>
+    <!-- Butona type="button" ekleyerek form davranışını engelliyoruz -->
+    <button type="button" class="music-button" onclick="playMusicAndHearts()">🎶 Müziği Başlat</button>
   </div>
-
+  
   <script>
     function playMusicAndHearts() {
       var audio = document.getElementById("muzik");
-      if (audio.paused) {
-        audio.play();
-      }
+      audio.currentTime = 0; // Müzik her seferinde baştan çalsın
+      audio.play();
       explodeHearts();
     }
-
+    
     function explodeHearts() {
-      // Patlama efekti için 15 kalp oluşturuyoruz.
+      // 15 kalp oluşturup ekranın ortasından patlama efekti veriyoruz.
       for (let i = 0; i < 15; i++) {
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "🩷";
-        // Başlangıç noktasını ekranın ortası olarak ayarlıyoruz.
-        heart.style.left = window.innerWidth / 2 + "px";
-        heart.style.top = window.innerHeight / 2 + "px";
+        // Ekranın tam ortası
+        heart.style.left = (window.innerWidth / 2) + "px";
+        heart.style.top = (window.innerHeight / 2) + "px";
 
-        // Kalbin nereye doğru patlayacağını rastgele belirliyoruz.
-        let randomX = Math.random() * 300 - 150 + "px";
-        let randomY = Math.random() * 300 - 150 + "px";
+        // Kalbin rastgele yönlere uçması için
+        let randomX = (Math.random() * 300 - 150) + "px";
+        let randomY = (Math.random() * 300 - 150) + "px";
         heart.style.setProperty("--tx", randomX);
         heart.style.setProperty("--ty", randomY);
-
+        
         document.body.appendChild(heart);
-
-        // Animasyon bittiğinde element DOM'dan kaldırılır.
-        setTimeout(() => {
-          heart.remove();
-        }, 1500);
+        
+        // Animasyon bitince kalbi kaldırıyoruz
+        setTimeout(() => heart.remove(), 1500);
       }
     }
   </script>
