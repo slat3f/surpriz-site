@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ben Bir Rüya Gördüm</title>
+  <title>Mobil & Djnamik</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     /* Genel Stil Ayarları */
@@ -18,18 +18,36 @@
       background: linear-gradient(120deg, #ff9a9e, #fad0c4);
       overflow: visible;
     }
-    /* Arka plandaki canvas tüm ekranı kaplayacak */
+    /* Arka plan partikül efekti için canvas */
     #backgroundCanvas {
       position: fixed;
       top: 0;
       left: 0;
       z-index: 0;
     }
-    /* İçerik Container */
+    /* Ses görselleştirici için canvas */
+    #visualizerCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* İçerik kapsayıcı */
     .container {
       position: relative;
       z-index: 2;
       padding: 20px;
+    }
+    /* Floating dekoratif emojiler */
+    .emoji-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
     }
     img {
       width: 80%;
@@ -60,22 +78,13 @@
       transition: 0.3s;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.5);
+      box-shadow: 0 4px 15px rgba(255,64,129,0.5);
     }
     .music-button:hover {
       box-shadow: 0 6px 20px rgba(255,64,129,0.8);
       transform: scale(1.05);
     }
-    /* Opsiyonel Floating Emojis */
-    .emoji-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
+    /* Floating emoji animasyonu */
     .emoji {
       position: absolute;
       font-size: 40px;
@@ -86,7 +95,7 @@
       15% { opacity: 1; }
       100% { transform: translateY(-10vh); opacity: 0; }
     }
-    /* Kalp Patlama Efekti */
+    /* Buton kalp patlama efekti */
     .heart {
       position: absolute;
       font-size: 24px;
@@ -99,6 +108,20 @@
       0% { transform: scale(0.5) translate(0,0); opacity: 1; }
       100% { transform: scale(1.8) translate(var(--tx), var(--ty)); opacity: 0; }
     }
+    /* Mesaj Overlay Stili */
+    #message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 24px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+      z-index: 4;
+    }
     /* Mobil Uyumlu Düzenlemeler */
     @media only screen and (max-width:600px) {
       body { padding: 10px; }
@@ -106,14 +129,16 @@
       .music-button { font-size: 18px; padding: 10px 20px; }
       .heart { font-size: 20px; }
       img { max-width: 90%; }
+      #message { font-size: 18px; padding: 15px; }
     }
   </style>
 </head>
 <body>
-  <!-- Arka planda partikül efekti için canvas -->
+  <!-- Arka plan partiküller -->
   <canvas id="backgroundCanvas"></canvas>
-  
-  <!-- Opsiyonel Floating Emojis -->
+  <!-- Ses görselleştirici canvas -->
+  <canvas id="visualizerCanvas"></canvas>
+  <!-- Floating dekoratif emojiler -->
   <div class="emoji-container">
     <div class="emoji" style="left:10%; animation-duration:9s;">🎀</div>
     <div class="emoji" style="left:30%; animation-duration:11s;">🍓</div>
@@ -122,9 +147,13 @@
     <div class="emoji" style="left:90%; animation-duration:12s;">🎀</div>
   </div>
   
+  <!-- Mesaj Overlay -->
+  <div id="message"></div>
+  
   <div class="container">
     <img src="foto1.jpeg" alt="Foto 1">
-    <p class="caption">🔢 42</p>
+    <!-- İlk fotoğrafın açıklaması -->
+    <p class="caption">affedildimmi😓</p>
     
     <img src="foto2.jpeg" alt="Foto 2">
     <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
@@ -135,9 +164,6 @@
     <img src="foto4.jpeg" alt="Foto 4">
     <p class="caption">🎀</p>
     
-    <!-- Müzik başlığı -->
-    <h2>Ben Bir Rüya Gördüm</h2>
-    
     <audio id="muzik">
       <source src="ruyagordum.mp3" type="audio/mp3">
       Tarayıcınız ses dosyasını desteklemiyor.
@@ -147,7 +173,9 @@
   </div>
   
   <script>
-    /* Partikül Arka Plan Efekti */
+    /* -----------------------
+       Partikül Arka Plan Efekti
+    ------------------------- */
     const canvas = document.getElementById("backgroundCanvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -190,27 +218,77 @@
     
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let particle of particlesArray) {
+      particlesArray.forEach(particle => {
         particle.update();
         particle.draw();
-      }
+      });
       requestAnimationFrame(animateParticles);
     }
     
     initParticles();
     animateParticles();
     
-    window.addEventListener("resize", function () {
+    window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initParticles();
     });
     
-    /* Buton Kalp Patlama Efekti */
+    /* -----------------------
+       Ses Görselleştirici
+    ------------------------- */
+    const audioElement = document.getElementById("muzik");
+    const visualizerCanvas = document.getElementById("visualizerCanvas");
+    const vctx = visualizerCanvas.getContext("2d");
+    visualizerCanvas.width = window.innerWidth;
+    visualizerCanvas.height = window.innerHeight;
+    
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaElementSource(audioElement);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    function drawVisualizer() {
+      requestAnimationFrame(drawVisualizer);
+      analyser.getByteFrequencyData(dataArray);
+      vctx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+      const barWidth = (visualizerCanvas.width / bufferLength) * 2.5;
+      let barHeight, x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i];
+        vctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        vctx.fillRect(x, visualizerCanvas.height - barHeight/2, barWidth, barHeight/2);
+        x += barWidth + 1;
+      }
+    }
+    
+    drawVisualizer();
+    
+    window.addEventListener("resize", () => {
+      visualizerCanvas.width = window.innerWidth;
+      visualizerCanvas.height = window.innerHeight;
+    });
+    
+    /* -----------------------
+       Buton Kalp Patlama, Vibration ve Message Overlay
+    ------------------------- */
     function playAndExplode() {
       const audio = document.getElementById("muzik");
       audio.currentTime = 0;
       audio.play();
+      if (navigator.vibrate) {
+        navigator.vibrate(200);
+      }
+      
+      // Mesaj overlay'nin gösterilmesi
+      const message = document.getElementById("message");
+      message.textContent = "iyiki tanışmışız güzelim, seni cok seviyorum ayni zamanda sana cok deger veriyorum bazen essekligim tutuyo mazur gör beni muaaahh";
+      message.style.display = "block";
+      setTimeout(() => { message.style.display = "none"; }, 5000);
       
       const button = document.getElementById("music-button");
       const rect = button.getBoundingClientRect();
@@ -233,4 +311,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
