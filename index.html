@@ -45,7 +45,7 @@
             margin-top: 20px;
         }
 
-        /* Daha fazla 🎀 ve 🍓 emojisinin rastgele çıkmasını sağlayan kod */
+        /* Kayan 🎀 ve 🍓 Emojileri (Rastgele yerlerden çıkacak!) */
         .ribbon {
             position: absolute;
             font-size: 30px;
@@ -87,10 +87,37 @@
             100% { box-shadow: 0px 0px 20px rgba(255, 255, 255, 1); }
         }
 
+        /* Renkli Parıltılar */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: sparkleFade 3s linear infinite;
+        }
+
+        @keyframes sparkleFade {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(2); opacity: 0; }
+        }
+
+        /* Kalp Yağmuru */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: fallHeart 3s linear infinite;
+        }
+
+        @keyframes fallHeart {
+            from { transform: translateY(-5vh); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <!-- Kayan 🎀 ve 🍓 Emojileri (Rastgele yerlerden çıkacak!) -->
+    <!-- Kayan 🎀 ve 🍓 Emojileri -->
     <div class="ribbon-container">
         <div class="ribbon" style="left: 5%; animation-duration: 7s;">🎀</div>
         <div class="ribbon" style="left: 15%; animation-duration: 5s;">🍓</div>
@@ -101,9 +128,15 @@
         <div class="ribbon" style="left: 90%; animation-duration: 7s;">🎀</div>
     </div>
 
+    <!-- Renkli Parıltılar -->
+    <div class="sparkle" style="top: 10%; left: 20%;"></div>
+    <div class="sparkle" style="top: 30%; left: 40%;"></div>
+    <div class="sparkle" style="top: 50%; left: 60%;"></div>
+    <div class="sparkle" style="top: 70%; left: 80%;"></div>
+
     <div class="container">
         <img src="foto1.jpeg" alt="Foto 1">
-        <p class="caption">🔢 27</p> <!-- Rastgele 2 basamaklı sayı ekledim -->
+        <p class="caption">🔢 53</p> <!-- Rastgele 2 basamaklı sayı ekledim -->
 
         <img src="foto2.jpeg" alt="Foto 2">
         <p class="caption">Seni coookkk seviyorum bitaneem muaahh 😘</p>
@@ -124,7 +157,21 @@
             <source src="ruyagordum.mp3" type="audio/mp3">
             Tarayıcınız ses dosyasını desteklemiyor.
         </audio>
-        <button class="music-button" onclick="document.getElementById('muzik').play();">🎶 Müziği Başlat</button>
+        <button class="music-button" onclick="rainHearts(); document.getElementById('muzik').play();">🎶 Müziği Başlat</button>
     </div>
+
+    <script>
+        function rainHearts() {
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+    </script>
 </body>
-</html> 
+</html>
